@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" type="text/css" href="inc/style.css"/>
+	<title>J2EP Manual</title>
+</head>
+
+<body>
+
+<div id="helasidan">
+
+<div id="meny">
+<ul>
+	<li><a href="install.html">Install</a></li>
+	<li><a href="configuration.html">Configuration</a>
+		<ul>
+			<li><a href="rules.html">Rules</a></li>
+			<li><a href="servers.html">Servers</a></li>
+			<li><a href="rewrite.html">Rewriting</a></li>
+			<li><a href="logging.html">Logging</a></li>
+		</ul>
+	</li>
+	<li><a href="examples.html">Examples</a></li>
+	<li>Misc
+		<ul>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="future_features.html">The future</a></li>
+			<li><a href="license.html">License</a></li>
+		</ul>
+	</li>
+	<li>Current release
+		<ul>
+			<li><a href="changelog.html">Changelog</a></li>
+			<li><a href="release-notes.html">Release notes</a></li>
+		</ul>
+	</li>
+</ul>
+
+</div>
+
+<div id="text">
+<h1>Rewriting</h1>
+<h2>Why do we need rewrite?</h2>
+<p>
+	Let's say you have a proxy running om www.myproxy.com and have
+	proxied the site www.remotesite.com to the directory /remote.
+	The links on the proxied page www.remotesite.com doesn't know 
+	they are being proxied, this can create some problems. But lets
+	start with looking at the three different link types.
+	<ul>
+		<li>&lt;a href="myfile.html"&gt; - This link will work</li>
+		<li>&lt;a href="/myfile.html"&gt; - This link wont work</li>
+		<li>&lt;a href="http://www.remotesite.com/myfile.html"&gt; 
+		- This link wont work</li>
+	</ul>
+</p>
+
+<p>
+	 The first link will work since it is relative to the content.
+</p>
+<p>
+	 The second link is mapped to the root and therefore the browser will
+	 request the following page: http://www.myproxy.com/myfile.html, but 
+	 this file isn't found since only files in the directory /remote 
+	 will be sent to www.remotesite.com. We have to change so that the 
+	 link points to /remote/myfile.html.
+</p>
+<p>
+	 The third link is absolute and therefor the browser will follow it 
+	 to http://www.remotesite.com/myfile.html. This works correctly, but
+	 only if the remote site is visible to the client. Probably the site
+	 being proxied is some internal server not accessible from the 
+	 outside. We have to change the link to 
+	 http://www.myproxy.com/remote/myfile.html. 
+</p>
+
+<h2>The rewrite filter</h2>
+<p>
+	As you should already have learned the proxy is built using a
+	filter that proxies all incoming requests. To make the rewrite
+	work there is another filter supplied, the rewrite filter. The 
+	proxy filter will work perfectly fine without a rewrite filter
+	and doesn't have any knowledge of the possibility for links to
+	be rewritten. This makes it just as easy to run the proxy with
+	and without rewriting.
+</p>
+
+
+
+<h2>How it works</h2>
+<p>
+	The current rewriting is done by parsing the html, javascript and 
+	css files looking for links using regular expressions.
+</p>
+
+<p>
+	The reason the proxy is using regular expressions is that it then 
+	can use the the same type of parsing to find links in both css and 
+	html. There is one other reason for using regular expression over a 
+	XML parser, pages aren't writing in XHTML. Since there are so many 
+	non XML compatible pages out there using a standard XML parser 
+	wouldn't work. There are other options like javax.swing.text.html 
+	and changing from regular expressions is something considered for 
+	the next versions. There will have to be some measurable performance
+	benefits for doing so however.
+</p>
+
+<h2>Turn on rewrite</h2>
+<h3>web.xml</h3>
+<p>
+	The default setting of the proxy is to not do any link 
+	rewriting. But you can easily turn the rewriting on by adding the
+	rewrite filter. A alternate web.xml is supplied with the proxy
+	that has rewriting enabled. The file is called web_rewriting.xml
+	and can be found in TOMCAT_HOME/webapps/J2EP_INSTALL_DIR/WEB-INF/.
+	To enable rewriting rename web_rewriting.xml to web.xml, make
+	sure that you overwrite the existing file.
+</p>
+<h3>data.xml (config file)</h3>
+<p>
+	Here are the good news, you don't have to do anything (almost).
+	If you have mapped a site for the proxy all of the links 
+	excluding the absolute ones will be rewritten. The reason that 
+	the absolute links aren't rewritten is that you might want to
+	leave them as they are and let the user follow those links.
+</p>
+<p>
+	You will probably turn absolute link rewriting on however.
+	To do this, simply add the parameter isRewriting="true" to the 
+	server. All absolute links found on a page will be matched to 
+	see if we have them mapped in the config. If we have the server 
+	mapped and <em>isRewriting</em> is set to "true" absolute links for the 
+	server will be rewritten. 
+</p>
+<p>
+	All servers doesn't support the isRewriting=”true”, for instance 
+	RoundRobinCluster will always do rewriting. Consult the 
+	<a href="server.html">documentation of the servers</a> for more 
+	information.
+</p>
+
+<h2>Other form of rewrites</h2>
+<p>
+	 There are two more issues with rewriting. One is when the
+	 server says a page has moved and sends a location for the new 
+	 page, we have to rewrite that location. The other issue is when a 
+	 cookie is sent from the server,  we have to change so the cookie is
+	 set for the correct directory. Both of these issues are handled by 
+	 the proxy without having to do any extra configuration.
+</p><div id="footer">
+	<a href="http://www.sourceforge.net/projects/j2ep">http://www.sourceforge.net/projects/j2ep</a>
+</div>
+
+</div>
+</div>
+
+<div id="sf">
+<a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=144132&amp;type=5" alt="SourceForge.net Logo" /></a>
+</div>
+</body>
+</html>

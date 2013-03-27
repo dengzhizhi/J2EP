@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" type="text/css" href="inc/style.css"/>
+	<title>J2EP Manual</title>
+</head>
+
+<body>
+
+<div id="helasidan">
+
+<div id="meny">
+<ul>
+	<li><a href="install.html">Install</a></li>
+	<li><a href="configuration.html">Configuration</a>
+		<ul>
+			<li><a href="rules.html">Rules</a></li>
+			<li><a href="servers.html">Servers</a></li>
+			<li><a href="rewrite.html">Rewriting</a></li>
+			<li><a href="logging.html">Logging</a></li>
+		</ul>
+	</li>
+	<li><a href="examples.html">Examples</a></li>
+	<li>Misc
+		<ul>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="future_features.html">The future</a></li>
+			<li><a href="license.html">License</a></li>
+		</ul>
+	</li>
+	<li>Current release
+		<ul>
+			<li><a href="changelog.html">Changelog</a></li>
+			<li><a href="release-notes.html">Release notes</a></li>
+		</ul>
+	</li>
+</ul>
+
+</div>
+
+<div id="text">
+<h1>Changelog for jEasy Extensible Proxy 1.0</h1>
+
+<p>
+	Changes listed are only major new features and doesn't include bug 
+	fixes. To monitor bugs please check the <a 
+	href="http://sourceforge.net/tracker/?group_id=144132&atid=757785">
+	bug tracker</a>.
+</p>
+<ul>
+	<li>
+		Added check of the Via header so that cyclic requests aren't allowed.
+		Cyclic requests are requests from the proxy that are returning to the
+		proxy once again, creating a never ending loop.
+	</li>
+	<li>
+		More proofreading of the manual and on some parts a bit of 
+		rewriting. All in all the manual should be easier to read and
+		contain fewer spelling errors.
+	</li>
+</ul><div id="footer">
+	<a href="http://www.sourceforge.net/projects/j2ep">http://www.sourceforge.net/projects/j2ep</a>
+</div>
+
+</div>
+</div>
+
+<div id="sf">
+<a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=144132&amp;type=5" alt="SourceForge.net Logo" /></a>
+</div>
+</body>
+</html>

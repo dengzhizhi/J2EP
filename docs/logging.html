@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" type="text/css" href="inc/style.css"/>
+	<title>J2EP Manual</title>
+</head>
+
+<body>
+
+<div id="helasidan">
+
+<div id="meny">
+<ul>
+	<li><a href="install.html">Install</a></li>
+	<li><a href="configuration.html">Configuration</a>
+		<ul>
+			<li><a href="rules.html">Rules</a></li>
+			<li><a href="servers.html">Servers</a></li>
+			<li><a href="rewrite.html">Rewriting</a></li>
+			<li><a href="logging.html">Logging</a></li>
+		</ul>
+	</li>
+	<li><a href="examples.html">Examples</a></li>
+	<li>Misc
+		<ul>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="future_features.html">The future</a></li>
+			<li><a href="license.html">License</a></li>
+		</ul>
+	</li>
+	<li>Current release
+		<ul>
+			<li><a href="changelog.html">Changelog</a></li>
+			<li><a href="release-notes.html">Release notes</a></li>
+		</ul>
+	</li>
+</ul>
+
+</div>
+
+<div id="text">
+<h1>Logging</h1>
+
+<h2>Introduction</h2>
+<p>
+	Some times you will have to debug the proxy to find out what is going on.
+	To help you with this J2EP has a good amount of log generation built in.
+</p>
+
+<p>
+	J2EP uses jakarta <a href="http://jakarta.apache.org/commons/logging">
+	commons-logging</a> for it's logging. This means it's easy to use
+	any logging engine that you want. log4j and java.util.logging are
+	the probable candidates. This documentation will only cover the setup used to
+	get java.util.logging running using Tomcat 5.5.
+</p>
+
+<h2>HttpClient</h2>
+<p>
+	Since J2EP uses httpclient to do the connection to the servers it's
+	a good idea to read the information about logging with httpclient. 
+	That information can be found in their 
+	<a href="http://jakarta.apache.org/commons/httpclient/logging.html">
+	manual</a>. Httpclient is using commons-logging too so the configuration
+	will be the same for httpclient and J2EP.
+</p>
+
+<h2>java.util.logging</h2>
+<p>
+	Tomcat has included it's own implementation of java.util.logging 
+	called JULI. This makes it easy to add a simple logging without installing a new framework like log4j.
+	You can read more about the logging for tomcat in it's
+	<a href="http://jakarta.apache.org/tomcat/tomcat-5.5-doc/logging.html">
+	documentation</a>.
+</p>
+
+<h3>Setup</h3>
+<p>
+	Make your own logging.properties file and place it in 
+	J2EP_INSTALL_DIR/WEB-INF/classes. This file can include all the 
+	documentation needed to configure various logging levels for
+	the packages.	
+</p>
+
+<h3>Example</h3>
+<p>
+	The following configuration will write the log to TOMCAT_ROOT/logs/
+	with the prefix j2ep. It is configured to debug the base level and
+	the server package which is a good config to debug the creation
+	of rules and watch rewriting.
+</p>
+<p class="code">
+handlers = org.apache.juli.FileHandler
+
+############################################################
+# Handler specific properties.
+# Describes specific configuration info for Handlers.
+############################################################
+
+org.apache.juli.FileHandler.level = FINEST
+org.apache.juli.FileHandler.directory = /logs
+org.apache.juli.FileHandler.prefix = j2ep.
+
+.level=INFO
+
+httpclient.wire.header.level=INFO
+org.apache.commons.httpclient.level=INFO
+net.sf.j2ep.level=FINE
+net.sf.j2ep.servers.level=FINE 
+</p>
+
+<p>
+	The following configuration will also write the log to TOMCAT_ROOT/logs/
+	with the prefix j2ep. This config is only using the httpclient to
+	do a debug of the headers. It will write all the headers sent and received 
+	and can be good when you want to debug a connection.
+</p>
+<p class="code">
+handlers = org.apache.juli.FileHandler
+
+############################################################
+# Handler specific properties.
+# Describes specific configuration info for Handlers.
+############################################################
+
+org.apache.juli.FileHandler.level = FINEST
+org.apache.juli.FileHandler.directory = /logs
+org.apache.juli.FileHandler.prefix = j2ep.
+
+.level=INFO
+
+httpclient.wire.header.level=FINE
+org.apache.commons.httpclient.level=FINE
+</p><div id="footer">
+	<a href="http://www.sourceforge.net/projects/j2ep">http://www.sourceforge.net/projects/j2ep</a>
+</div>
+
+</div>
+</div>
+
+<div id="sf">
+<a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=144132&amp;type=5" alt="SourceForge.net Logo" /></a>
+</div>
+</body>
+</html>

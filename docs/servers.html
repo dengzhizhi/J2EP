@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" type="text/css" href="inc/style.css"/>
+	<title>J2EP Manual</title>
+</head>
+
+<body>
+
+<div id="helasidan">
+
+<div id="meny">
+<ul>
+	<li><a href="install.html">Install</a></li>
+	<li><a href="configuration.html">Configuration</a>
+		<ul>
+			<li><a href="rules.html">Rules</a></li>
+			<li><a href="servers.html">Servers</a></li>
+			<li><a href="rewrite.html">Rewriting</a></li>
+			<li><a href="logging.html">Logging</a></li>
+		</ul>
+	</li>
+	<li><a href="examples.html">Examples</a></li>
+	<li>Misc
+		<ul>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="future_features.html">The future</a></li>
+			<li><a href="license.html">License</a></li>
+		</ul>
+	</li>
+	<li>Current release
+		<ul>
+			<li><a href="changelog.html">Changelog</a></li>
+			<li><a href="release-notes.html">Release notes</a></li>
+		</ul>
+	</li>
+</ul>
+
+</div>
+
+<div id="text">
+<h1>Servers</h1>
+
+<h2>BaseServer</h2>
+<p>
+	The BaseServer marks which host name and path we want to proxy.
+	We can configure the server with the parameters <em>domainName</em> and 
+	<em>path</em>.
+</p>
+<h3>Parameters</h3>
+
+
+
+
+
+<h4>domainName</h4>
+<h5>
+REQUIRED 
+
+</h5>
+<p>
+	The domain name this server should be proxying to, it can include a port.
+</p>
+
+
+
+
+
+
+
+<h4>path</h4>
+<h5>
+
+<br />
+</h5>
+<p>
+	Will mark the path on the server we are mapping to.
+</p>
+
+
+
+
+
+
+
+<h4>isRewriting</h4>
+<h5>
+Default: false
+<br />
+</h5>
+<p>
+	Mark if absolute links matching this server should be rewritten.
+</p>
+
+
+
+<h3>Example</h3>
+<p class="code">
+&lt;server className="net.sf.j2ep.servers.BaseServer" 
+	domainName="www.nytimes.com" 
+	isRewriting="true"&gt;
+		
+	&lt;rule className="net.sf.j2ep.rules.DirectoryRule"
+		directory="/news"
+	/&gt;
+&lt;/server&gt;
+</p>
+
+<h2>RoundRobinCluster</h2>
+<p>
+	The RoundRobinCluster contains numerous servers and will 
+	choose which server to proxy to separate for each request in a round-robin fashion.
+	If a server starts a session the proxy will make
+	sure that when a request is made to the server, with the same session id, the
+	server that created the session is the one that will receive the
+	request.
+</p>
+<h2>Parameters</h2>
+<p>There are multiple servers objects in the RoundRobinCluster, each of
+them have the following parameters</p>
+
+
+
+
+
+<h4>domainName</h4>
+<h5>
+REQUIRED 
+
+</h5>
+<p>
+	The domain name that can include a port this server should be proxying to
+</p>
+
+
+
+
+
+
+
+<h4>path</h4>
+<h5>
+
+<br />
+</h5>
+<p>
+	Will mark the path on the server we are mapping to.
+</p>
+
+
+
+<h3>Example</h3>
+<p class="code">
+&lt;cluster-server className="net.sf.j2ep.servers.RoundRobinCluster"&gt;
+	&lt;server
+		domainName="internal1.company.com"
+		path="/somepath"
+	/&gt;
+	&lt;server
+		domainName="internal2.company.com"
+		path="/otherpath"
+	/&gt;
+	
+	&lt;rule className="net.sf.j2ep.rules.DirectoryRule"
+		directory="/cluster"
+	/&gt;
+&lt;/cluster-server&gt;
+</p>
+<p>
+	Note that the RoundRobinCluster uses the element <em>cluster-server</em>
+	instead of the normal <em>server</em>.
+</p><div id="footer">
+	<a href="http://www.sourceforge.net/projects/j2ep">http://www.sourceforge.net/projects/j2ep</a>
+</div>
+
+</div>
+</div>
+
+<div id="sf">
+<a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=144132&amp;type=5" alt="SourceForge.net Logo" /></a>
+</div>
+</body>
+</html>

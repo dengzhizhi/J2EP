@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" type="text/css" href="inc/style.css"/>
+	<title>J2EP Manual</title>
+</head>
+
+<body>
+
+<div id="helasidan">
+
+<div id="meny">
+<ul>
+	<li><a href="install.html">Install</a></li>
+	<li><a href="configuration.html">Configuration</a>
+		<ul>
+			<li><a href="rules.html">Rules</a></li>
+			<li><a href="servers.html">Servers</a></li>
+			<li><a href="rewrite.html">Rewriting</a></li>
+			<li><a href="logging.html">Logging</a></li>
+		</ul>
+	</li>
+	<li><a href="examples.html">Examples</a></li>
+	<li>Misc
+		<ul>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="future_features.html">The future</a></li>
+			<li><a href="license.html">License</a></li>
+		</ul>
+	</li>
+	<li>Current release
+		<ul>
+			<li><a href="changelog.html">Changelog</a></li>
+			<li><a href="release-notes.html">Release notes</a></li>
+		</ul>
+	</li>
+</ul>
+
+</div>
+
+<div id="text">
+<h1>Examples</h1>
+
+<h2>Scenario</h2>
+<p>
+	You are working in a company with some internal servers only accessible
+	from inside the firewall. You now want to grant users from the outside
+	access to these servers by using a reverse proxy.
+</p>
+<p>
+	You have one server containing white papers written by your company and
+	want to let people view the public ones.
+	You also have a intranet server, containing information to your staff
+	that would be good if the staff could access off hours or when they
+	are working from abroad.
+	<ul>
+		<li>intra.company.com - The intranet server</li>
+		<li>beta.company.com - The white papers</li>
+	</ul>
+</p>
+
+<h2>Configure</h2>
+<p>
+	You decide to have the white papers as the standard page since that
+	is what most people visiting your page are looking for. You however
+	only want people to visit white papers marked as public. You therefore
+	add a server mapping all requests to beta.company.com/public
+</p>
+<p class="code">
+&lt;server className="net.sf.j2ep.servers.BaseServer" 
+	domainName="beta.company.com"
+	path="/public"&gt;  
+	
+	&lt;rule className="net.sf.j2ep.rules.AcceptEverythingRule" /&gt; 
+&lt;/server&gt;
+</p>
+
+<p>
+	The intranet server should be accessed only by your own staff. But
+	since they should be able to access it from any computer you simply
+	add a login to the page and put up the server under /intranet.
+</p>
+<p class="code">
+&lt;server className="net.sf.j2ep.servers.BaseServer" 
+	domainName="intra.company.com"&gt;  
+	
+	&lt;rule className="net.sf.j2ep.rules.DirectoryRule" 
+		directory="/intranet"
+	/&gt; 
+&lt;/server&gt;
+</p>
+
+<p>
+	Remember that the rules are processed until one match is found,
+	therefore you will have to put he DirectoryRule before the
+	AcceptEverythingRule, resulting in the following data.xml
+</p>
+<p class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config&gt;
+
+&lt;server className="net.sf.j2ep.servers.BaseServer" 
+	domainName="intra.company.com"&gt; 
+	 
+	&lt;rule className="net.sf.j2ep.rules.DirectoryRule" 
+		directory="/intranet"
+	/&gt; 
+&lt;/server&gt;
+
+&lt;server className="net.sf.j2ep.servers.BaseServer" 
+	domainName="beta.company.com"
+	path="/public"&gt;  
+	
+	&lt;rule className="net.sf.j2ep.rules.AcceptEverythingRule" /&gt; 
+&lt;/server&gt;
+
+&lt;/config&gt;
+</p>
+
+<h2>Load balancing needed</h2>
+
+<p>
+	Opening up the company's list of white papers had a great response from the
+	customers. Unfortunately this also made the server go down due to the heavy
+	load. You decided to start two additional servers to balance the load on
+	beta.company.com. After the new servers are deployed you have to change
+	the config of J2EP so it uses the new servers as well as beta.company.com.
+	This is very easy to do, just change the BaseServer to
+	a RoundRobinCluster and we are done. The server config would look like this.
+</p>
+<p class="code">
+&lt;server className="net.sf.j2ep.servers.RoundRobinCluster"&gt;
+	&lt;server
+		domainName="beta.company.com"
+		path="/public"
+	/&gt;
+	&lt;server
+		domainName="gamma.company.com"
+		path="/public"
+	/&gt;
+	&lt;server
+		domainName="delta.company.com"
+		path="/public"
+	/&gt;
+	  
+	&lt;rule className="net.sf.j2ep.rules.AcceptEverythingRule" /&gt; 
+&lt;/server&gt;	
+</p>
+<div id="footer">
+	<a href="http://www.sourceforge.net/projects/j2ep">http://www.sourceforge.net/projects/j2ep</a>
+</div>
+
+</div>
+</div>
+
+<div id="sf">
+<a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=144132&amp;type=5" alt="SourceForge.net Logo" /></a>
+</div>
+</body>
+</html>

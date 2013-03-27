@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" type="text/css" href="inc/style.css"/>
+	<title>J2EP Manual</title>
+</head>
+
+<body>
+
+<div id="helasidan">
+
+<div id="meny">
+<ul>
+	<li><a href="install.html">Install</a></li>
+	<li><a href="configuration.html">Configuration</a>
+		<ul>
+			<li><a href="rules.html">Rules</a></li>
+			<li><a href="servers.html">Servers</a></li>
+			<li><a href="rewrite.html">Rewriting</a></li>
+			<li><a href="logging.html">Logging</a></li>
+		</ul>
+	</li>
+	<li><a href="examples.html">Examples</a></li>
+	<li>Misc
+		<ul>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="future_features.html">The future</a></li>
+			<li><a href="license.html">License</a></li>
+		</ul>
+	</li>
+	<li>Current release
+		<ul>
+			<li><a href="changelog.html">Changelog</a></li>
+			<li><a href="release-notes.html">Release notes</a></li>
+		</ul>
+	</li>
+</ul>
+
+</div>
+
+<div id="text">
+<h1>Future features</h1>
+<p>
+	There are numerous features that I would like to add to the 
+	proxy. But there just isn't time to include everything :)
+</p>
+<p>
+	Some of the elements listed here are taken from the <a 
+	href="http://sourceforge.net/tracker/?atid=757788&group_id=144132&func=browse">
+	feature request	tracker</a> on sourceforge. They will then be closed
+	on the tracker and added as official "nice to haves". 
+</p>
+
+<h2>Wish list</h2>
+<p>
+	Here are some features and changes that I would like to see added 
+	to the proxy. If you would like to help add some of them, take
+	contact via sourceforge and I will commit your code.
+</p>
+<ul>
+	<li>
+		Parse html looking for links using a XML parser. This should be
+		faster then the current regular expressions parsing of the pages.
+	</li>
+	<li>
+		Add support for webdav methods.
+	</li>
+	<li>
+		Ask the underlying servers to respond with the content as gzip.
+		Make sure this doesn't break the rewrite and
+		that content is extracted if the end user can't handle gzip.
+	</li>
+	<li>
+		Enable use of SSL connection to end servers. This should be rather
+		easy to fix since HttpClient handles HTTPS. Currently the protocol used
+		to proxy is the same as the client is connecting to the proxy with.
+	</li>
+	<li>
+		Extract the factories to interfaces making it possible to use
+		custom factories like a factory supporting webdav and one other
+		supporting ftp.
+	</li>
+	<li>
+		Add support for caching. There must be some filter using changing
+		that can be reused and bundled with the proxy. This can also make
+		rewrite performance not that important since we will cache the
+		rewritten page. 
+	</li>
+	<li>
+		Create more rules. All extra rules that does something somewhat
+		useful would be great to add to the proxy.
+	</li>
+	<li>
+		Add some sort of a disallow server that will end the request coming
+		to it. This is good since it can be used with rules to "kill" requests
+		matching a rule. This should be a rather easy task.
+	</li>
+	<li>
+		Make a jar release for people that wants to embed a proxy 
+		in their application. Currently this is in the build.xml but some changes
+		will have to be made and maybe some new classes created to make
+		the proxy classes work without a Servlet Container.
+	</li>
+	<li>
+		Currently the XML parsing is done using hard coded parsing information
+		in the ConfigParser, extract this to a new file specifying the 
+		parsing in XML. The problem
+		will be to create classes based on the <em>className</em> parameter, possibly
+		this will have to be implemented in the commons-digester code.
+	</li>
+</ul>
+<div id="footer">
+	<a href="http://www.sourceforge.net/projects/j2ep">http://www.sourceforge.net/projects/j2ep</a>
+</div>
+
+</div>
+</div>
+
+<div id="sf">
+<a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=144132&amp;type=5" alt="SourceForge.net Logo" /></a>
+</div>
+</body>
+</html>

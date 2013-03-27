@@ -1,0 +1,7 @@
+net.sf.j2ep
+net.sf.j2ep.factories
+net.sf.j2ep.model
+net.sf.j2ep.requesthandlers
+net.sf.j2ep.responsehandlers
+net.sf.j2ep.rules
+net.sf.j2ep.servers

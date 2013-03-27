@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" type="text/css" href="inc/style.css"/>
+	<title>J2EP Manual</title>
+</head>
+
+<body>
+
+<div id="helasidan">
+
+<div id="meny">
+<ul>
+	<li><a href="install.html">Install</a></li>
+	<li><a href="configuration.html">Configuration</a>
+		<ul>
+			<li><a href="rules.html">Rules</a></li>
+			<li><a href="servers.html">Servers</a></li>
+			<li><a href="rewrite.html">Rewriting</a></li>
+			<li><a href="logging.html">Logging</a></li>
+		</ul>
+	</li>
+	<li><a href="examples.html">Examples</a></li>
+	<li>Misc
+		<ul>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="future_features.html">The future</a></li>
+			<li><a href="license.html">License</a></li>
+		</ul>
+	</li>
+	<li>Current release
+		<ul>
+			<li><a href="changelog.html">Changelog</a></li>
+			<li><a href="release-notes.html">Release notes</a></li>
+		</ul>
+	</li>
+</ul>
+
+</div>
+
+<div id="text">
+<h1>FAQ</h1>
+
+<h2>Trace doesn't work!</h2>
+<p>
+	Most containers regards the TRACE method as a security risk and
+	have it disabled by default. If it isn't working you'll have to enable
+	TRACE in your own container. If you are running 
+	tomcat add <em>allowTrace=true</em> to your Connector in server.xml.
+	Check their <a href="http://jakarta.apache.org/tomcat/tomcat-5.5-doc/config/http.html">
+	documentation</a> of the HTTP Connector for more information.
+</p>
+
+<h2>The server header has information about the proxy too.</h2>
+<p>
+	The <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">
+	RFC</a> states in section 14.38 Server that "If the response is being
+	forwarded through a proxy, the proxy application MUST NOT modify the 
+	Server response-header." 
+</p>
+
+<p>
+	However, it isn't possible to have tomcat not add a Server header of
+	it's own, this is a problem with tomcat not with J2EP.
+</p><div id="footer">
+	<a href="http://www.sourceforge.net/projects/j2ep">http://www.sourceforge.net/projects/j2ep</a>
+</div>
+
+</div>
+</div>
+
+<div id="sf">
+<a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=144132&amp;type=5" alt="SourceForge.net Logo" /></a>
+</div>
+</body>
+</html>

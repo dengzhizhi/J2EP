@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" type="text/css" href="inc/style.css"/>
+	<title>J2EP Manual</title>
+</head>
+
+<body>
+
+<div id="helasidan">
+
+<div id="meny">
+<ul>
+	<li><a href="install.html">Install</a></li>
+	<li><a href="configuration.html">Configuration</a>
+		<ul>
+			<li><a href="rules.html">Rules</a></li>
+			<li><a href="servers.html">Servers</a></li>
+			<li><a href="rewrite.html">Rewriting</a></li>
+			<li><a href="logging.html">Logging</a></li>
+		</ul>
+	</li>
+	<li><a href="examples.html">Examples</a></li>
+	<li>Misc
+		<ul>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="future_features.html">The future</a></li>
+			<li><a href="license.html">License</a></li>
+		</ul>
+	</li>
+	<li>Current release
+		<ul>
+			<li><a href="changelog.html">Changelog</a></li>
+			<li><a href="release-notes.html">Release notes</a></li>
+		</ul>
+	</li>
+</ul>
+
+</div>
+
+<div id="text">
+<h1>Install</h1>
+
+<h2>Pre install notes</h2>
+<p>
+	This site has some pages that are shown incorrectly with 
+	Internet Explorer 6.0. That is a problem with your browser,
+	not with this page.
+</p>
+
+<h2>Requirements</h2>
+<p>
+	To run J2EP you need an application server implementing the J2EE
+	servlet specification of version 2.3 or later. You will need J2SE 
+	1.4 or later to run J2EP.
+</p>
+
+<p>
+	J2EP depends on some external libraries. The libraries needed are 
+	all licensed under the same license as J2EP (Apache 2.0) and are 
+	included in the release. The libraries are:
+</p>
+<ul>
+	<li><a href="http://jakarta.apache.org/commons/httpclient/">commons-httpclient</a></li>
+	<li><a href="http://jakarta.apache.org/commons/digester/">commons-digester</a></li>
+	<li><a href="http://jakarta.apache.org/commons/codec/">commons-codec</a></li>
+	<li><a href="http://jakarta.apache.org/commons/beanutils/">commons-beanutils</a></li>
+	<li><a href="http://jakarta.apache.org/commons/logging/">commons-logging</a></li>
+</ul>
+
+<h2>Install</h2>
+
+<p>
+	The following installation instructions are assuming you are
+	running <a href="http://jakarta.apache.org/tomcat">Tomcat 5.5
+	</a>. If you aren't, consult your container's manual for 
+	instructions on how to deploy a WAR.
+</p>
+
+<p>
+	Installing the proxy is rather easy, all you have to to is 
+	extract the	
+	WAR from the release and deploy it to your 
+	container. For tomcat this is done from the manager, located at 
+	<a href="http://localhost:8080/manager/html">
+	http://localhost:8080/manager/html</a> at default. In the 
+	manager look up "WAR file to deploy" and in the "file input" locate 
+	the WAR included with this release. Now, simple press "Deploy".
+</p>
+
+<h2>Run in ROOT context</h2>
+<p>
+	After you have deployed the webapp a good thing to do is change 
+	the name for your new directory to make sure that the proxy is 
+	running in the root. This isn't necessary and the proxy will 
+	work under any context but you usually want the proxy to handle 
+	all requests to the server.
+</p>
+<ul>
+<li>
+	Go to your tomcat installation directory and browse to 
+	TOMCAT_ROOT/webapps/ here you should find a directory named 
+	j2ep-VERSION. 
+</li>
+<li>
+	Simply rename this directory to ROOT (making sure to backup any
+	existing directories and files). 
+</li>
+<li>
+	Tomcat will probably notice that you have changed the webapp 
+	folder and reload the files for you, otherwise you will have to
+	restart Tomcat.
+</li>
+</ul>
+
+
+<h2>Test that it works</h2>
+
+<p>
+	Make sure you have deployed the proxy with the default configuration
+	file before continuing. The following text also assumes that you are
+	running the proxy in the ROOT context, otherwise you have to add the
+	context to the links.
+</p>
+
+<p>
+	Try connection to <a href="http://localhost:8080/">http://localhost:8080/</a>, or the URL where
+	you are running your server and have deployed the proxy to. Going to this page should let you see
+	the <a href="http://jakarta.apache.org">http://jakarta.apache.org</a> web page.
+
+</p>
+
+<p>
+	Try to go to <a href="http://localhost:8080/news/">http://localhost:8080/news/</a>
+	instead. This is a mapping of the www.nytimes.com page as found in the 
+	<a href="configuration.html">configuration</a>.
+	Compare the page to <a href="http://www.nytimes.com">www.nytimes.com</a>.
+</p>
+<p>
+	In fact there is a difference between the two pages. This is a problem with 
+	link rewriting which you can read about in the 
+	<a href="rewrite.html">rewrite manual</a>.
+</p><div id="footer">
+	<a href="http://www.sourceforge.net/projects/j2ep">http://www.sourceforge.net/projects/j2ep</a>
+</div>
+
+</div>
+</div>
+
+<div id="sf">
+<a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=144132&amp;type=5" alt="SourceForge.net Logo" /></a>
+</div>
+</body>
+</html>

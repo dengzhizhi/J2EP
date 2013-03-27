@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" type="text/css" href="inc/style.css"/>
+	<title>J2EP Manual</title>
+</head>
+
+<body>
+
+<div id="helasidan">
+
+<div id="meny">
+<ul>
+	<li><a href="install.html">Install</a></li>
+	<li><a href="configuration.html">Configuration</a>
+		<ul>
+			<li><a href="rules.html">Rules</a></li>
+			<li><a href="servers.html">Servers</a></li>
+			<li><a href="rewrite.html">Rewriting</a></li>
+			<li><a href="logging.html">Logging</a></li>
+		</ul>
+	</li>
+	<li><a href="examples.html">Examples</a></li>
+	<li>Misc
+		<ul>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="future_features.html">The future</a></li>
+			<li><a href="license.html">License</a></li>
+		</ul>
+	</li>
+	<li>Current release
+		<ul>
+			<li><a href="changelog.html">Changelog</a></li>
+			<li><a href="release-notes.html">Release notes</a></li>
+		</ul>
+	</li>
+</ul>
+
+</div>
+
+<div id="text">
+<h1>Configuration</h1>
+<p>
+	There is only one configuration file you will have to change, 
+	which is TOMCAT_HOME/webapps/J2EP_INSTALL_DIR/WEB-INF/data.xml. 
+	At default this file looks like this.
+
+</p>
+<p class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config&gt;
+
+	&lt;server className="net.sf.j2ep.servers.BaseServer" 
+		domainName="www.nytimes.com" 
+		isRewriting="true"&gt;
+		
+		&lt;rule className="net.sf.j2ep.rules.DirectoryRule"
+	  		directory="/news"
+	  	/&gt;
+	&lt;/server&gt;
+	
+	&lt;server className="net.sf.j2ep.servers.BaseServer"
+		domainName="jakarta.apache.org"
+		isRewriting="true"&gt;
+	
+		&lt;rule className="net.sf.j2ep.rules.AcceptEverythingRule"/&gt;
+  	&lt;/server&gt;
+
+&lt;/config&gt;
+</p>
+
+<h2>Structure</h2>
+<p>
+	As we can see, what is specified is a set of servers used as mappings
+	between the proxy and a webpages. The servers
+	all need to include a rule that is used to match any incoming
+	request. The rules are there to decide what server to use for each 
+	request.
+</p>
+
+<h2>Finding a matching server</h2>
+<p>
+	When the proxy tries to determine where to proxy the request, all the
+	servers' rules are traversed trying
+	to match the current request. In this example there are two servers.
+	When a request comes in it will first try to match the server
+	going to nytimes.com. The rule for this server is a <em>DirectoryRule</em>
+	that will check if the start of the URI matches the directory 
+	specified. This means that if we request localhost:8080/news/ this
+	rule will match, but not if we request localhost:8080/somethingelse/
+</p>
+<p>
+	If the request was matched by the first server (to nytimes.com) the 
+	request is handled by that server and the rest of the servers are ignored.
+	If the first server didn't match the request the proxy will try to match
+	with the second server and so forth until one server is matched.
+</p>
+
+<h2>Parameters</h2>
+<p>
+	Both the server and the rule are specified with a <em>className</em>
+	making it possible to create your own rules and servers. Since the
+	parameters will vary based on what server and rule that is used, only a few
+	frequently used parameters are worth mentioning. They are 
+	<em>domainName</em> and <em>path</em> and are usually found in all
+	servers, they set the domain and path we want to proxy the requests to.
+</p>
+<p>
+	Information on the parameters and how the matching process
+	works for a particular rule or server are found in the specific 
+	documentation found below.
+</p>
+<ul>
+	<li><a href="rules.html">Rules</a></li>
+	<li><a href="servers.html">Servers</a></li>
+</ul><div id="footer">
+	<a href="http://www.sourceforge.net/projects/j2ep">http://www.sourceforge.net/projects/j2ep</a>
+</div>
+
+</div>
+</div>
+
+<div id="sf">
+<a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=144132&amp;type=5" alt="SourceForge.net Logo" /></a>
+</div>
+</body>
+</html>

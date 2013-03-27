@@ -1,0 +1,330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" type="text/css" href="inc/style.css"/>
+	<title>J2EP Manual</title>
+</head>
+
+<body>
+
+<div id="helasidan">
+
+<div id="meny">
+<ul>
+	<li><a href="install.html">Install</a></li>
+	<li><a href="configuration.html">Configuration</a>
+		<ul>
+			<li><a href="rules.html">Rules</a></li>
+			<li><a href="servers.html">Servers</a></li>
+			<li><a href="rewrite.html">Rewriting</a></li>
+			<li><a href="logging.html">Logging</a></li>
+		</ul>
+	</li>
+	<li><a href="examples.html">Examples</a></li>
+	<li>Misc
+		<ul>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="future_features.html">The future</a></li>
+			<li><a href="license.html">License</a></li>
+		</ul>
+	</li>
+	<li>Current release
+		<ul>
+			<li><a href="changelog.html">Changelog</a></li>
+			<li><a href="release-notes.html">Release notes</a></li>
+		</ul>
+	</li>
+</ul>
+
+</div>
+
+<div id="text">
+<h1>Rules</h1>
+<p>
+	A rule is a class that can match a request. It can also <a href="rewrite.html">rewrite</a>
+	both incoming links to the proxy and outgoing links found in html.
+</p>
+<p>
+	All rules are specified by the attribute <em>className</em>.
+</p>
+
+<h2>AcceptEverythingRule</h2>
+<p>
+	This rule will always match and you might wonder why it is then needed. Well, if no rule is 
+	matched the server doesn't know where to send the specific request and will not return anything.
+	Therefore you should always have an AcceptEverythingRule at the end.
+</p>
+<h3>Parameters</h3>
+<p>There aren't any parameters for this rule</p>
+
+<h2>IPRule</h2>
+<p>
+	If you want to match on the clients IP so that e.g. only users from the internal network can
+	access a page you can use the IPRule. This rule will check the IP for an incoming connection
+	and see if it lies within the start range and end range. If the IP is in range we have a match.
+</p>
+<h3>Parameters</h3>
+
+
+
+
+
+<h4>startRange</h4>
+<h5>
+REQUIRED 
+
+</h5>
+<p>
+	The start of the IP range that we will allow connections from.
+</p>
+
+
+
+
+
+
+
+<h4>endRange</h4>
+<h5>
+REQUIRED 
+
+</h5>
+<p>
+	The end of the IP range.
+</p>
+
+
+
+<h2>TimeRule</h2>
+<p>
+	This is a simple rule to match the current hour. This rule can be used 
+	when you only want to allow connections to a server during some 
+	hours of the day. The time is set with a 24h clock. E.g., 10 PM is 
+	set as 22. Midnight can be set as 0 or 24.
+</p>
+<h3>Parameters</h3>
+
+
+
+
+
+<h4>startTime</h4>
+<h5>
+REQUIRED 
+
+</h5>
+<p>
+	The hour of day when we will start to allow connections.
+</p>
+
+
+
+
+
+
+
+<h4>endTime</h4>
+<h5>
+REQUIRED 
+
+</h5>
+<p>
+	The last hour of day that connections will be allowed.
+</p>
+
+
+<p>
+	If <em>endTime</em> is earlier then <em>startTime</em> e.g., 
+	startTime=23 endTime=01 it will be interpreted as a time crossing
+	a date barrier. It will work just as expected, connections made at
+	11:00 PM to 1:00 AM (the following day) will be allowed.
+</p>
+
+<h2>DirectoryRule</h2>
+<p>
+	The DirectoryRule will check the start of the URL (excluding the context path
+	where you are running the proxy). If the path starts with the directory specified in the XML
+	there is a match. The directory will be removed from the URL before the
+	request is sent to the server so that you can map a server to any
+	directory without thinking about the server you are mapping.
+</p>
+<h3>Parameters</h3>
+
+
+
+
+
+<h4>directory</h4>
+<h5>
+REQUIRED 
+
+</h5>
+<p>
+	This is the directory we are mapping to.
+</p>
+
+
+
+<h2>RewriteRule</h2>
+<p>
+	The DirectoryRule will check the start of the URL for a match
+	and remove the directory before sending the request to the server.
+	Sometimes you want a more powerful rewriting than this, this is
+	the time you use the RewriteRule.
+</p>
+<p>
+	The rewrite rule will use regular expressions to try to match a URL.
+	When the URL is matched you can also specify in what way it should be
+	rewritten, changing the URL before the proxy connects to the server. 
+	This makes it possible to do some quite powerful operations, much like 
+	<a href="http://httpd.apache.org/docs/2.0/misc/rewriteguide.html">
+	mod_rewrite</a>
+	or <a href="http://tuckey.org/urlrewrite/">urlrewrite</a>.
+</p>
+<h3>Parameters</h3>
+
+
+
+
+
+<h4>from</h4>
+<h5>
+REQUIRED 
+
+</h5>
+<p>
+	This is the regex we try to match.
+</p>
+
+
+
+
+
+
+
+<h4>to</h4>
+<h5>
+REQUIRED 
+
+</h5>
+<p>
+	When <em>from</em> was a match this is what the match will be rewritten to.
+</p>
+
+
+
+
+
+
+
+<h4>revertFrom</h4>
+<h5>
+
+<br />
+</h5>
+<p>
+	
+	Required if you are using <a href="rewrite.html">rewriting</a>!
+	This is the pattern to decide if any links found in the html should
+	be rewritten. 
+
+</p>
+
+
+
+
+
+
+
+<h4>revertTo</h4>
+<h5>
+
+<br />
+</h5>
+<p>
+	
+	Required if you are using <a href="rewrite.html">rewriting</a>!
+	When <em>revertFrom</em> was a match this is what the match will be rewritten to.
+
+</p>
+
+
+<p>
+	One important issue is that when we are using rewriting <em>revertFrom</em>
+	and <em>revertTo</em> must be the logical opposite of <em>from</em> and
+	<em>to</em>. If they aren't opposites, links found in html that are rewritten wont
+	be matched or at least not correctly rewritten by <em>to</em>. This means that links found in
+	HTML that are rewritten wont work when the user tries to follow them.
+</p>
+<h3>Example</h3>
+<p>
+	The following example is the structured homedirs example taken from
+	the mod_rewrite documentation. The regex and quote is taken from the 
+	<a href="http://tuckey.org/urlrewrite/manual/guide.html#mod_re">mod_rewrite
+	vs urlrewrite</a> section in the urlrewrite manual.
+</p>
+<p>
+	Quote: <br/>
+	Some sites with thousands of users usually use a structured homedir layout, i.e. each homedir is in a
+	subdirectory which begins for instance with the first character of the username. So, /~foo/anypath is
+	/home/f/foo/.www/anypath while /~bar/anypath is /home/b/bar/.www/anypath.
+	
+	We use the following ruleset to expand the tilde URLs into exactly the above layout.
+</p>
+
+<p class="code">
+&lt;rule className="net.sf.j2ep.rules.RewriteRule"
+	from="^/~(([a-z])[a-z0-9]+)(.*)"
+	to="/home/$2/$1/.www$3"
+	revertFrom="^/home/[a-z]/([a-z0-9]+)/.www(.*)$"
+	revertTo="/~$1$2"
+/&gt;
+</p>
+
+<p>
+	This made it possible to present a very easy page syntax for the
+	user that is followed to a more complex URL on the server side.
+</p>
+
+<h2>CompositeRule</h2>
+<p>
+	Some times you want to check for many things. Let's say we want a server
+	to be mapped only when the directory is "/apache-wiki" and the user has IP 127.0.0.x. To
+	make sure both of these rules are met we use a CompositeRule like the one below.
+</p>
+<p class="code">
+&lt;composite-rule className="net.sf.j2ep.rules.CompositeRule"&gt;
+	&lt;rule className="net.sf.j2ep.rules.DirectoryRule"
+		directory="/apache-wiki"
+	/&gt;
+		
+	&lt;rule className="net.sf.j2ep.rules.IPRule"
+		startRange="127.0.0.1"
+		endRange="127.0.0.255"
+	/&gt;
+
+&lt;/composite-rule&gt;
+</p>
+<p>
+	Note that the CompositeRule uses the element <em>composite-rule</em>
+	instead of the normal <em>rule</em>.
+</p>
+<p>
+	The CompositeRule contains many other rules. In order to have a match for a CompositeRule all
+	of the included rules have to match. There are no specific parameters
+	for the CompositeRule.
+</p>
+<div id="footer">
+	<a href="http://www.sourceforge.net/projects/j2ep">http://www.sourceforge.net/projects/j2ep</a>
+</div>
+
+</div>
+</div>
+
+<div id="sf">
+<a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=144132&amp;type=5" alt="SourceForge.net Logo" /></a>
+</div>
+</body>
+</html>

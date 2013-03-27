@@ -1,0 +1,185 @@
+body
+{
+	background: #eee; 
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+	/* 
+	only to help our "friend" ie 6.0 
+	can't expect it to understand margin: 1em auto;
+	*/
+	text-align: center;
+}
+
+#helasidan
+{
+	background: #fff;
+	color: #333;
+	position: relative;
+	margin: 1em auto;
+	padding: 0 0.5em 0 0.5em;
+	border: 1px solid #877;
+	width: 50em; 
+	text-align: left;
+	overflow: hidden;
+}
+
+#text
+{
+	float: right;
+	padding: 0 0 0 0.5em;
+	width: 39.5em;
+	border-left: 1px dotted #877;
+	height: 100%;
+}
+
+#meny
+{
+	float: left;
+	width: 10em;
+	margin: 0.5em 0 0 0.5em;
+	font-size: 8pt;
+}
+
+#meny ul
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#meny li
+{
+	display: list-item;
+}
+
+#meny ul ul
+{
+	margin: 0;
+	padding: 0 0 0 1em;
+}
+
+h1
+{
+	font-size: 18pt;
+	margin: 0 0 0.3em 0;
+	padding: 0.2em 0 0 0;
+}
+
+h2
+{
+	font-size: 14pt;
+	margin: 1em 0 0.1em 0;
+}
+
+h3
+{
+	font-size: 12pt;
+	font-style: italic;
+	margin: 0.8em 0 0 0;
+}
+
+h4
+{
+	font-size: 10pt;
+	font-style: normal;
+	margin: 0 0.5em 0 0;
+	float: left;
+}
+
+h5
+{
+	font-size: 10pt;
+	font-style: normal;
+	color: gray;
+	margin: 0 0 0 5em;
+}
+
+p
+{
+	margin: 0.1em 0 0.5em 0;
+	padding: 0;
+}
+
+img
+{
+	border: 0;
+}
+
+em
+{
+	font-style: italic;
+}
+
+li
+{
+	margin-top: 0.5em;
+}
+
+a
+{
+	color: #00c;
+	text-decoration: none;
+	border-bottom: 1px dotted blue;
+}
+
+a:hover
+{
+	 /* text-decoration: underline; */
+	border-bottom: 1px solid blue;
+	background: none;
+}
+
+.image
+{
+	border: 0;
+}
+
+.image:hover
+{
+	border: 0;
+}
+
+#sf
+{
+	position: relative;
+	bottom: 2px;
+	text-align: center;
+}
+
+#sf a
+{
+	border: 0;
+}
+
+#sf a:hover
+{
+	border: 0;
+}
+
+#footer
+{
+	font-size: 9pt;
+	position: relative;
+	bottom: 0.5em;
+	text-align: right;
+	margin: 1.5em 0 0 0;
+}
+
+
+.code
+{
+	width: 100%;
+	font-size: 9pt;
+	position: relative;
+	margin: 0 0 0.5em 2em;
+	font-family: monospace;
+	white-space: pre;
+	overflow: auto;
+}
+
+
+

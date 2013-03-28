@@ -32,15 +32,17 @@
 
     -->
     <property name="app.name"               value="j2ep"/>
-    <property name="build.home"             value="${basedir}/WEB-INF/classes"/>
-    <property name="app.home"               value="${basedir}/WEB-INF"/>
-    <property name="lib.home"               value="${basedir}/WEB-INF/lib"/>
-    <property name="dist.home"              value="${basedir}/dist"/>
+    <property name="build.home"             value="${basedir}/target/WEB-INF/classes"/>
+    <property name="app.home"               value="${basedir}/target/WEB-INF"/>
+    <property name="lib.home"               value="${basedir}/target/WEB-INF/lib"/>
+    <property name="dist.home"              value="${basedir}/target/output"/>
     <property name="docs.home"              value="${basedir}/docs"/>
-    <property name="src.home"               value="${basedir}/src"/>
-    <property name="test.relativehome"      value="/net/sf/j2ep/test"/>
+    <property name="src.home"               value="${basedir}/src/"/>
+    <property name="src.main.home"          value="${src.home}/main/java"/>
+    <property name="src.test.home"          value="${src.home}/test/java"/>
+    <property name="test.relativehome"      value="/test/java/net/sf/j2ep/test"/>
     <property name="test.path"              value="net.sf.j2ep.test"/>
-    <property name="reports.test"           value="${basedir}/testreports"/>
+    <property name="reports.test"           value="${basedir}/target/testreports"/>
     <property name="manager.url"            value="${server.url}/manager"/>
 
     <property name="compile.debug"          value="true"/>
@@ -88,7 +90,7 @@
 
         <!-- Compile Java classes -->
         <mkdir dir="${build.home}" />
-        <javac source="1.4" target="1.4" srcdir="${src.home}" destdir="${build.home}" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+        <javac source="1.5" target="1.5" srcdir="${src.main.home}" destdir="${build.home}" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
             <classpath refid="compile.classpath" />
         </javac>
 

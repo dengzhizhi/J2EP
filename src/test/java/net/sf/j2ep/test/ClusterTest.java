@@ -16,7 +16,7 @@ public class ClusterTest extends FilterTestCase {
     
     public void setUp() {   
         proxyFilter = new ProxyFilter();
-        config.setInitParameter("dataUrl", "/WEB-INF/classes/net/sf/j2ep/test/testData.xml");
+        config.setInitParameter("dataUrl", "/target/test-classes/net/sf/j2ep/test/testData.xml");
         try {
             proxyFilter.init(config);
         } catch (ServletException e) {

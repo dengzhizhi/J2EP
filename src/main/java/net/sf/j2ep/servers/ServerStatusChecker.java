@@ -33,19 +33,19 @@ import org.apache.commons.logging.LogFactory;
  * notify a listener when servers goes down and comes
  * back online again.
  *
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  */
 public class ServerStatusChecker extends Thread {
     
     /** 
      * The online servers.
      */
-    private LinkedList online;
+    private LinkedList<Server> online;
     
     /** 
      * The offline servers.
      */
-    private LinkedList offline;
+    private LinkedList<Server> offline;
     
     /** 
      * Client used to make the connections.
@@ -81,8 +81,8 @@ public class ServerStatusChecker extends Thread {
         setPriority(Thread.NORM_PRIORITY-1);
         setDaemon(true);
         
-        online = new LinkedList();
-        offline = new LinkedList();
+        online = new LinkedList<Server>();
+        offline = new LinkedList<Server>();
         httpClient = new HttpClient(); 
         httpClient.getParams().setBooleanParameter(HttpClientParams.USE_EXPECT_CONTINUE, false);
         httpClient.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
@@ -92,14 +92,14 @@ public class ServerStatusChecker extends Thread {
      * Runs the tests
      * @see java.lang.Runnable#run()
      */
+    @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
-        for(;;) {
+        while (true) {
             checkOnlineServers();
             checkOfflineServers();
             try {
                 sleep(pollingTime);
-            } catch (InterruptedException ie) {
-                
+            } catch (InterruptedException ignored) {
             }
         }
     }
@@ -170,8 +170,7 @@ public class ServerStatusChecker extends Thread {
      * @return The URL
      */
     private String getServerURL(Server server) {
-        String url = "http://" + server.getDomainName() + server.getPath() + "/";
-        return url;
+        return "http://" + server.getDomainName() + server.getPath() + "/";
     }
     
     /**

@@ -30,7 +30,7 @@ import org.apache.commons.httpclient.methods.TraceMethod;
 /**
  * Handler for the OPTIONS and TRACE method.
  *
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  */
 public class MaxForwardRequestHandler extends RequestHandlerBase {
 
@@ -42,7 +42,7 @@ public class MaxForwardRequestHandler extends RequestHandlerBase {
      * @see net.sf.j2ep.model.RequestHandler#process(javax.servlet.http.HttpServletRequest, java.lang.String)
      */
     public HttpMethod process(HttpServletRequest request, String url) throws IOException {
-        HttpMethodBase method = null;
+        HttpMethodBase method;
         
         if (request.getMethod().equalsIgnoreCase("OPTIONS")) {
             method = new OptionsMethod(url);
@@ -59,11 +59,11 @@ public class MaxForwardRequestHandler extends RequestHandlerBase {
                 method.abort();
             } else if (max != -1) {
                 setHeaders(method, request);
-                method.setRequestHeader("Max-Forwards", "" + max--);
+                method.setRequestHeader("Max-Forwards", "" + max);
             } else {
                 setHeaders(method, request);
             }
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
         
         return method;
     }

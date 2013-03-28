@@ -34,7 +34,7 @@ import org.apache.commons.logging.LogFactory;
  * server. More information about this can be found in the 
  * ClusterServer
  * 
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  * @see ClusterContainer
  */
 public class ClusterRequestWrapper extends HttpServletRequestWrapper {
@@ -42,7 +42,7 @@ public class ClusterRequestWrapper extends HttpServletRequestWrapper {
     /** 
      * The cookies for this request.
      */
-    private Vector cookies;
+    private Vector<String> cookies;
     
     /** 
      * Regex to find session in cookies.
@@ -63,7 +63,7 @@ public class ClusterRequestWrapper extends HttpServletRequestWrapper {
      */
     public ClusterRequestWrapper(HttpServletRequest request) {
         super(request);
-        cookies = new Vector();
+        cookies = new Vector<String>();
         
         Enumeration reqCookies = request.getHeaders("Cookie");
         while (reqCookies.hasMoreElements()) {
@@ -85,7 +85,7 @@ public class ClusterRequestWrapper extends HttpServletRequestWrapper {
      */
     public String getHeader(String name) {
         if (name.equalsIgnoreCase("cookie")) {
-            return (String) cookies.firstElement();
+            return cookies.firstElement();
         } else {
             return super.getHeader(name);
         }

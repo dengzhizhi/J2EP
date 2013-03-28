@@ -45,7 +45,7 @@ public abstract class RequestHandlerBase implements RequestHandler {
      * A set of headers that are not to be set in the request,
      * these headers are for example Connection.
      */
-    private static Set bannedHeaders = new HashSet();
+    private static Set<String> bannedHeaders = new HashSet<String>();
 
     /**
      * @see net.sf.j2ep.model.RequestHandler#process(javax.servlet.http.HttpServletRequest, java.lang.String)
@@ -103,9 +103,9 @@ public abstract class RequestHandlerBase implements RequestHandler {
         }
         
         String originalVia = request.getHeader("via");
-        StringBuffer via = new StringBuffer("");
+        StringBuilder via = new StringBuilder();
         if (originalVia != null) {
-            if (originalVia.indexOf(serverHostName) != -1) {
+            if (originalVia.contains(serverHostName)) {
                 log.error("This proxy has already handled the request, will abort.");
                 throw new HttpException("Request has a cyclic dependency on this proxy.");
             }

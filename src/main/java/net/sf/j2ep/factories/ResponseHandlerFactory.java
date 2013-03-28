@@ -51,7 +51,7 @@ public class ResponseHandlerFactory {
             throw new MethodNotAllowedException("The method " + method.getName() + " is not in the AllowedHeaderHandler's list of allowed methods.", AllowedMethodHandler.getAllowHeader());
         }
         
-        ResponseHandler handler = null;
+        ResponseHandler handler;
         if (method.getName().equals("OPTIONS")) {
             handler = new OptionsResponseHandler((OptionsMethod) method);
         } else if (method.getName().equals("GET")) {
@@ -72,7 +72,4 @@ public class ResponseHandlerFactory {
 
         return handler;
     }
-
-
-
 }

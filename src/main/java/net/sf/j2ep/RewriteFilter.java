@@ -34,7 +34,7 @@ import org.apache.commons.logging.LogFactory;
  * get the server targeted. Responses sent back
  * are also rewritten.
  *
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  */
 public class RewriteFilter implements Filter {
     
@@ -61,13 +61,10 @@ public class RewriteFilter implements Filter {
         
         if (response.isCommitted()) {
             log.info("Not proxying, already committed.");
-            return;
         } else if (!(request instanceof HttpServletRequest)) {
             log.info("Request is not HttpRequest, will only handle HttpRequests.");
-            return;
         } else if (!(response instanceof HttpServletResponse)) {
             log.info("Request is not HttpResponse, will only handle HttpResponses.");
-            return;
         } else {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             HttpServletRequest httpRequest = (HttpServletRequest) request;

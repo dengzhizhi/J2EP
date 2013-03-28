@@ -26,7 +26,7 @@ import org.apache.commons.httpclient.HttpMethod;
  * project to process headers to filter out those
  * not allowed by the proxy.
  *
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  */
 public class AllowedMethodHandler {
     
@@ -38,7 +38,7 @@ public class AllowedMethodHandler {
     /** 
      * A set of the HTTP methods allowed by the proxy.
      */
-    private static HashSet allowedMethods;
+    private static HashSet<String> allowedMethods;
     
     /**
      * Will go through all the methods sent in
@@ -50,7 +50,7 @@ public class AllowedMethodHandler {
      * @return The allowed headers for this request
      */
     public static String processAllowHeader(String allowSent) {
-        StringBuffer allowToSend = new StringBuffer("");
+        StringBuilder allowToSend = new StringBuilder("");
         StringTokenizer tokenizer = new StringTokenizer(allowSent, ",");
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken().trim().toUpperCase();
@@ -99,7 +99,7 @@ public class AllowedMethodHandler {
      * @param allowed The list of allowed methods, should be comma separated
      */
     public synchronized static void setAllowedMethods(String allowed) {
-        allowedMethods = new HashSet();
+        allowedMethods = new HashSet<String>();
         allowString = allowed;
         StringTokenizer tokenizer = new StringTokenizer(allowed, ",");
         while (tokenizer.hasMoreTokens()) {

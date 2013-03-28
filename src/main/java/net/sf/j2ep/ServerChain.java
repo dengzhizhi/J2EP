@@ -36,19 +36,19 @@ import net.sf.j2ep.model.ServerContainer;
  * RuleChain used with the balancer webapp shipped 
  * with tomcat.
  *
- * @author Anders Nyman, Yoav Shapira
+ * @author Anders Nyman, Yoav Shapira, Daniel Deng
  */
 public class ServerChain{
     
     /**
      * The list of servers to evaluate.
      */
-    private List serverContainers;
+    private List<Server> serverContainers;
 
     /**
      * Constructor.
      */
-    public ServerChain(List serverContainers) {
+    public ServerChain(List<Server> serverContainers) {
         this.serverContainers = serverContainers;
     }
 
@@ -58,7 +58,7 @@ public class ServerChain{
      *
      * @return The servers
      */
-    protected List getServers() {
+    protected List<Server> getServers() {
         return serverContainers;
     }
 
@@ -68,7 +68,7 @@ public class ServerChain{
      *
      * @return The iterator
      */
-    protected Iterator getServerIterator() {
+    protected Iterator<Server> getServerIterator() {
         return getServers().iterator();
     }
 
@@ -140,26 +140,24 @@ public class ServerChain{
      * @return A string representation
      */
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         buffer.append("[");
         buffer.append(getClass().getName());
         buffer.append(": ");
 
-        Iterator iter = getServerIterator();
-        Server currentServer = null;
+        Iterator<Server> iter = getServerIterator();
+        Server currentServer;
 
         while (iter.hasNext()) {
-            currentServer = (Server) iter.next();
+            currentServer = iter.next();
             buffer.append(currentServer);
 
             if (iter.hasNext()) {
                 buffer.append(", ");
             }
         }
-
         buffer.append("]");
-
         return buffer.toString();
     }
 }

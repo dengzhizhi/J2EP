@@ -67,8 +67,8 @@ public class TraceResponseHandler extends ResponseHandlerBase {
             PrintWriter writer = response.getWriter();
             writer.println("TRACE " + path + " " + protocol);
             Header[] headers = method.getRequestHeaders();
-            for (int i=0; i < headers.length; i++) {
-                writer.print(headers[i]);
+            for (Header header : headers) {
+                writer.print(header);
             }
             writer.flush();
             writer.close();

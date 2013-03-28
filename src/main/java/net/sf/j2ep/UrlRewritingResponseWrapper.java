@@ -39,7 +39,7 @@ import org.apache.commons.logging.LogFactory;
  * This class also handles rewriting of the headers Location
  * and Set-Cookie.
  *
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  */
 public final class UrlRewritingResponseWrapper extends HttpServletResponseWrapper{
     
@@ -266,6 +266,6 @@ public final class UrlRewritingResponseWrapper extends HttpServletResponseWrappe
      */
     private boolean shouldRewrite(String contentType) {
         String lowerCased = contentType.toLowerCase();
-        return (lowerCased.indexOf("html")>-1 || lowerCased.indexOf("css")>-1 || lowerCased.indexOf("javascript")>-1);
+        return (lowerCased.contains("html") || lowerCased.contains("css") || lowerCased.contains("javascript"));
     }
 }

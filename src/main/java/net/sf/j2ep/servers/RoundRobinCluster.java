@@ -21,7 +21,7 @@ package net.sf.j2ep.servers;
  * A cluster using round-robin to get the next server in the
  * cluster.
  *
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  */
 public class RoundRobinCluster extends ClusterContainer {
 
@@ -72,7 +72,6 @@ public class RoundRobinCluster extends ClusterContainer {
     protected ClusteredServer createNewServer(String domainName, String directory) {
         String id = "server" + numberOfServers;
         numberOfServers++;
-        ClusteredServer server = new ClusteredServer(domainName, directory, id);
-        return server;
+        return new ClusteredServer(domainName, directory, id);
     }
 }

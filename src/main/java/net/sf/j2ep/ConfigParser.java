@@ -17,7 +17,6 @@
 package net.sf.j2ep;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import net.sf.j2ep.model.ServerContainer;
@@ -33,7 +32,7 @@ import org.apache.commons.logging.LogFactory;
  * Based on the work by Yoav Shapira for the balancer webapp distributed with
  * Tomcat.
  * 
- * @author Anders Nyman, Yoav Shapira
+ * @author Anders Nyman, Yoav Shapira, Daniel Deng
  */
 public class ConfigParser {
 
@@ -144,10 +143,9 @@ public class ConfigParser {
      * @param servers The server to debug
      */
     private void debugServers(LinkedList servers) {
-        Iterator itr = servers.iterator();
-        
-        while (itr.hasNext()) {
-            ServerContainer container = (ServerContainer) itr.next();
+
+        for (Object server : servers) {
+            ServerContainer container = (ServerContainer) server;
             log.debug(container + " mapped to --> " + container.getRule());
         }
     }

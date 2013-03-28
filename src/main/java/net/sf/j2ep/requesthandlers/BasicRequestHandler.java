@@ -43,7 +43,7 @@ public class BasicRequestHandler extends RequestHandlerBase {
      */
     public HttpMethod process(HttpServletRequest request, String url) throws HttpException {
         
-        HttpMethodBase method = null;
+        HttpMethodBase method;
       
         if (request.getMethod().equalsIgnoreCase("GET")) {
             method = new GetMethod(url);

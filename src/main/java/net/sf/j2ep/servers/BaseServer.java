@@ -27,12 +27,7 @@ import net.sf.j2ep.model.Server;
  * name in some other way. For instance a server fetching the host name from the
  * request could be made to change the proxy into a forwarding proxy.
  * 
- * @author Anders Nyman
- */
-/**
- * 
- *
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  */
 public class BaseServer extends ServerContainerBase implements Server {
  
@@ -142,7 +137,7 @@ public class BaseServer extends ServerContainerBase implements Server {
      */
     public void setPath(String path) {
         if (path == null) {
-            path = "";
+            this.path = "";
         } else {
             this.path = path;
         }

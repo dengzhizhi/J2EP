@@ -38,7 +38,7 @@ public class RequestHandlerFactory {
     /** 
      * The RequestHandlers to return.
      */
-    private static HashMap requestHandlers;
+    private static HashMap<String, RequestHandler> requestHandlers;
     
     /** 
      * These methods are handled by this factory.
@@ -53,11 +53,11 @@ public class RequestHandlerFactory {
     static {
         RequestHandlerBase.addBannedHeaders(bannedHeaders);
         
-        requestHandlers = new HashMap();
+        requestHandlers = new HashMap<String, RequestHandler>();
         MaxForwardRequestHandler optionsAndTrace = new MaxForwardRequestHandler();
         BasicRequestHandler basic = new BasicRequestHandler();
         EntityEnclosingRequestHandler entityEnclosing = new EntityEnclosingRequestHandler();
-        
+
         requestHandlers.put("OPTIONS", optionsAndTrace);
         requestHandlers.put("GET", basic);
         requestHandlers.put("HEAD", basic);
@@ -79,7 +79,7 @@ public class RequestHandlerFactory {
             throw new MethodNotAllowedException("The method " + method + " is not in the AllowedHeaderHandler's list of allowed methods.", AllowedMethodHandler.getAllowHeader());
         }
         
-        RequestHandler handler = (RequestHandler) requestHandlers.get(method.toUpperCase());
+        RequestHandler handler = requestHandlers.get(method.toUpperCase());
         if (handler == null) {
             throw new MethodNotAllowedException("The method " + method + " was allowed by the AllowedMethodHandler, not by the factory.", handledMethods);
         } else {

@@ -29,20 +29,20 @@ import net.sf.j2ep.model.Rule;
  * composite design pattern. The rule is matches if
  * all the included rules are matched.
  *
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  */
 public class CompositeRule extends BaseRule {
 
     /** 
      * The list of rules.
      */
-    private LinkedList rules;
+    private LinkedList<Rule> rules;
     
     /**
      * Empty constructor, will only create the list of rules.
      */
     public CompositeRule() {
-        rules = new LinkedList();
+        rules = new LinkedList<Rule>();
     }
     
     /**
@@ -82,9 +82,7 @@ public class CompositeRule extends BaseRule {
      */
     public String process(String uri) {
         String returnString = uri;
-        Iterator itr = rules.iterator();
-        while (itr.hasNext()) {
-            Rule rule = (Rule) itr.next();
+        for (Rule rule : rules) {
             returnString = rule.process(returnString);
         }
         
@@ -114,22 +112,15 @@ public class CompositeRule extends BaseRule {
      * @return A string representation
      */
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
-        buffer.append("[");
-        buffer.append("CompositeRule containing ");
-        
-        Iterator itr = rules.iterator();
-        while (itr.hasNext()) {
-            Rule rule = (Rule) itr.next();
-            buffer.append("(");
-            buffer.append(rule.getClass().getName());
-            buffer.append(") ");
+        buffer.append("[CompositeRule containing ");
+
+        for (Rule rule : rules) {
+            buffer.append("(").append(rule.getClass().getName()).append(") ");
         }
-        
-        buffer.append(": ");
-        buffer.append("]");
+
+        buffer.append(": ]");
         return buffer.toString();
     }
-
 }

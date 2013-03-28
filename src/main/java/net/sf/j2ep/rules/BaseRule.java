@@ -26,7 +26,7 @@ import net.sf.j2ep.model.Rule;
  * This class is based on the work by Yoav Shapira
  * for the balancer webapp supplied with Tomcat.
  *
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  */
 public abstract class BaseRule implements Rule {
     
@@ -50,7 +50,7 @@ public abstract class BaseRule implements Rule {
      * @return The string representation
      */
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         buffer.append("[");
         buffer.append(getClass().getName());

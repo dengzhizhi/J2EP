@@ -30,7 +30,7 @@ import org.apache.commons.httpclient.methods.PutMethod;
 /**
  * Handler for POST and PUT methods.
  *
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  */
 public class EntityEnclosingRequestHandler extends RequestHandlerBase {
 
@@ -43,14 +43,16 @@ public class EntityEnclosingRequestHandler extends RequestHandlerBase {
      */
     public HttpMethod process(HttpServletRequest request, String url) throws IOException {
         
-        EntityEnclosingMethod method = null;
+        EntityEnclosingMethod method;
         
         if (request.getMethod().equalsIgnoreCase("POST")) {
             method = new PostMethod(url);
         } else if (request.getMethod().equalsIgnoreCase("PUT")) {
             method = new PutMethod(url);
+        } else {
+            return null;
         }
-        
+
         setHeaders(method, request);
         
         InputStreamRequestEntity stream;
@@ -59,8 +61,5 @@ public class EntityEnclosingRequestHandler extends RequestHandlerBase {
         method.setRequestHeader("Content-type", request.getContentType());
         
         return method;
-        
     }
-        
-
 }

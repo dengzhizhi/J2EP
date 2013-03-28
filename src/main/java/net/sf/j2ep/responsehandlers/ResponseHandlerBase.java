@@ -36,7 +36,7 @@ import org.apache.commons.logging.LogFactory;
  * Basic implementation of a Response Handler. This class
  * can write the headers and process the output stream.
  *
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  */
 public abstract class ResponseHandlerBase implements ResponseHandler{
     
@@ -108,16 +108,15 @@ public abstract class ResponseHandlerBase implements ResponseHandler{
      */
     protected void setHeaders(HttpServletResponse response) {
         Header[] headers = method.getResponseHeaders();
-        
-        for (int i=0; i < headers.length; i++) {
-            Header header = headers[i];
+
+        for (Header header : headers) {
             String name = header.getName();
             boolean contentLength = name.equalsIgnoreCase("content-length");
             boolean connection = name.equalsIgnoreCase("connection");
-            
+
             if (!contentLength && !connection) {
                 response.addHeader(name, header.getValue());
-            } 
+            }
         }
         
         setViaHeader(response);
@@ -136,7 +135,7 @@ public abstract class ResponseHandlerBase implements ResponseHandler{
         }
         
         Header originalVia = method.getResponseHeader("via");
-        StringBuffer via = new StringBuffer("");
+        StringBuilder via = new StringBuilder("");
         if (originalVia != null) {
             via.append(originalVia.getValue()).append(", ");
         }

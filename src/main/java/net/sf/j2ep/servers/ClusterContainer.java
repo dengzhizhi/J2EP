@@ -35,7 +35,7 @@ import net.sf.j2ep.model.Server;
  * request is linked to a session this server will make sure that it's the
  * domain that created the session that will process this request.
  * 
- * @author Anders Nyman
+ * @author Anders Nyman, Daniel Deng
  */
 public abstract class ClusterContainer extends ServerContainerBase implements ServerStatusListener {
     
@@ -47,7 +47,7 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
     /** 
      * The servers in our cluster,
      */
-    protected HashMap servers;
+    protected HashMap<String, Server> servers;
     
     /** 
      * Class that will check if our servers are online or offline.
@@ -58,7 +58,7 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
      * Basic constructor
      */
     public ClusterContainer() {
-        servers = new HashMap();
+        servers = new HashMap<String, Server>();
         statusChecker = new ServerStatusChecker(this, 5*60*1000);
         statusChecker.start();
         log = LogFactory.getLog(ClusterContainer.class);
@@ -115,11 +115,10 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
     private String getServerIdFromCookie(Cookie[] cookies) {
         String serverId = null;
         if (cookies != null) {
-            for (int i=0; i < cookies.length; i++) {
-                Cookie cookie = cookies[i];
-                if ( isSessionCookie(cookie.getName()) ) {
+            for (Cookie cookie : cookies) {
+                if (isSessionCookie(cookie.getName())) {
                     String value = cookie.getValue();
-                    String id = value.substring(value.indexOf(".")+1);
+                    String id = value.substring(value.indexOf(".") + 1);
                     if (id.startsWith("server")) {
                         serverId = id;
                     }
